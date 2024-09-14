@@ -1,0 +1,10 @@
+.navbar-list li {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+.navbar-list li div {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

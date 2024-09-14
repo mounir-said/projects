@@ -1,0 +1,35 @@
+.security-btn {
+  position: relative;
+  right: 0;
+  min-width: 95px;
+  padding: 8.5px;
+  margin: 0 auto;
+  color: #fff;
+  border: 1px solid #205b8d;
+  -webkit-border-radius: 3px;
+  -moz-border-radius: 3px;
+  border-radius: 43px;
+  background: #205b8d;
+}
+
+.login-status-header {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -moz-box;
+  display: -ms-flexbox;
+
+  width: 450px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 16px;
+}
+
+.login-status-user-info {
+  font-weight: 700;
+  text-transform: uppercase;
+  text-align: center;
+  line-height: 18px;
+  padding: 0 12px;
+  margin: auto;
+}

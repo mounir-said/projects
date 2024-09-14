@@ -1,0 +1,11 @@
+<div class="cart-area d-n">
+  <a routerLink="/cart-details">
+    <div class="icon-container ms-5">
+      <i class="fa fa-shopping-cart custom-icon" aria-hidden="true"></i>
+      <div class="total">
+        {{ totalPrice | currency : "USD" }}
+        <span> {{ totalQuantity }}</span>
+      </div>
+    </div>
+  </a>
+</div>
