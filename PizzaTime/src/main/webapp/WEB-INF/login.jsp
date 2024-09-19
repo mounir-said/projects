@@ -1,4 +1,4 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1" pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
@@ -11,27 +11,42 @@
         body { font-family: Arial, sans-serif; }
         .container { margin-top: 20px; }
         .form-section { margin-bottom: 20px; }
-        .form-section h1 { margin-bottom: 20px; }
         .form-section .form-group { margin-bottom: 15px; }
         .form-section .form-control { border-radius: 4px; }
-        .form-section .btn-primary { border-radius: 4px; }
+        .form-section .btn-custom { 
+            border-radius: 4px; 
+            background-color: green; /* Green background */
+            color: white; /* White text */
+            width: 100%; /* Full width */
+        }
         .error-message { color: #d9534f; }
         .top-right-link {
             position: absolute;
             top: 10px;
             right: 10px;
         }
+        .header-title {
+            font-size: 32px; /* Increased size */
+            margin-bottom: 20px;
+        }
+        .welcome-title {
+            text-align: center;
+            font-size: 24px; /* Adjust as needed */
+            margin-bottom: 30px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Registration link at the top right -->
-        <div class="top-right-link">
-            <p><a href="/register">Don't have an account? Register here</a></p>
+        <div class="d-flex justify-content-between">
+            <p class="header-title">PIZZA PETE'S</p>
+            <div class="top-right-link">
+                <p><a href="/register">Don't have an account? Register here</a></p>
+            </div>
         </div>
 
         <div class="form-section">
-            <h1>Login</h1>
+            <h1 class="welcome-title">Welcome Back!</h1>
             <p class="error-message"><c:out value="${login_error}" /></p>
             <form method="post" action="/login" id="login-form">
                 <div class="form-group">
@@ -42,7 +57,7 @@
                     <label for="password">Password:</label>
                     <input type="password" id="password" name="password" class="form-control"/>
                 </div>
-                <button type="submit" class="btn btn-primary">Login!</button>
+                <button type="submit" class="btn btn-custom">Log In</button>
             </form>
         </div>
     </div>

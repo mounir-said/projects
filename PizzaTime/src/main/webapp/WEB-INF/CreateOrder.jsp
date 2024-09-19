@@ -17,17 +17,19 @@
         .form-group { margin-top: 10px; }
         fieldset { border: 1px solid #ccc; padding: 10px; margin-top: 10px; }
         legend { font-weight: bold; }
+        .form-row { margin-bottom: 10px; }
+        .btn-green { background-color: #28a745; color: white; width: 100%; }
     </style>
 </head>
 <body>
     <!-- Navbar -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">MyApp</a>
+        <a class="navbar-brand" href="#">Pizza Pete's</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
+            <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="/home">Home</a>
                 </li>
@@ -35,17 +37,17 @@
                     <a class="nav-link" href="/order">Order</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
+                    <a class="nav-link" href="/account/${userId}">Account</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/account/${userId}">Account</a>
+                    <a class="nav-link" href="/logout">Logout</a>
                 </li>
             </ul>
         </div>
     </nav>
 
     <div class="container">
-        <h1>Craft-A-Pizza</h1>
+        <h1 class="text-center">Craft-A-Pizza</h1>
         <form:form method="POST" action="/createorder" modelAttribute="order" id="order-form">
             <div class="form-group">
                 <form:label path="deliveryMethod">Delivery Method:</form:label>
@@ -55,34 +57,37 @@
                 </form:select>
                 <form:errors path="deliveryMethod" cssClass="text-danger"/>
             </div>
-            <div class="form-group">
-                <form:label path="pizzaSize">Size:</form:label>
-                <form:select path="pizzaSize" class="form-control">
-                    <form:option value="Small">Small</form:option>
-                    <form:option value="Medium">Medium</form:option>
-                    <form:option value="Large">Large</form:option>
-                </form:select>
-                <form:errors path="pizzaSize" cssClass="text-danger"/>
-            </div>
-            <div class="form-group">
-                <form:label path="crustType">Crust:</form:label>
-                <form:select path="crustType" class="form-control">
-                    <form:option value="Thin Crust">Thin Crust</form:option>
-                    <form:option value="Thick Crust">Thick Crust</form:option>
-                    <form:option value="Deep Dish">Deep Dish</form:option>
-                </form:select>
-                <form:errors path="crustType" cssClass="text-danger"/>
-            </div>
-            <div class="form-group">
-                <form:label path="qty">Qty:</form:label>
-                <form:select path="qty" class="form-control">
-                    <form:option value="1">1</form:option>
-                    <form:option value="2">2</form:option>
-                    <form:option value="3">3</form:option>
-                    <form:option value="4">4</form:option>
-                    <form:option value="5">5</form:option>
-                </form:select>
-                <form:errors path="qty" cssClass="text-danger"/>
+
+            <div class="form-row">
+                <div class="form-group col">
+                    <form:label path="pizzaSize">Size:</form:label>
+                    <form:select path="pizzaSize" class="form-control">
+                        <form:option value="Small">Small</form:option>
+                        <form:option value="Medium">Medium</form:option>
+                        <form:option value="Large">Large</form:option>
+                    </form:select>
+                    <form:errors path="pizzaSize" cssClass="text-danger"/>
+                </div>
+                <div class="form-group col">
+                    <form:label path="crustType">Crust:</form:label>
+                    <form:select path="crustType" class="form-control">
+                        <form:option value="Thin Crust">Thin Crust</form:option>
+                        <form:option value="Thick Crust">Thick Crust</form:option>
+                        <form:option value="Deep Dish">Deep Dish</form:option>
+                    </form:select>
+                    <form:errors path="crustType" cssClass="text-danger"/>
+                </div>
+                <div class="form-group col">
+                    <form:label path="qty">Qty:</form:label>
+                    <form:select path="qty" class="form-control">
+                        <form:option value="1">1</form:option>
+                        <form:option value="2">2</form:option>
+                        <form:option value="3">3</form:option>
+                        <form:option value="4">4</form:option>
+                        <form:option value="5">5</form:option>
+                    </form:select>
+                    <form:errors path="qty" cssClass="text-danger"/>
+                </div>
             </div>
 
             <fieldset>
@@ -107,7 +112,7 @@
             </fieldset>
             
             <form:input type="hidden" path="user" value="${userId}" />
-            <button type="submit" class="btn btn-primary">Add to Order</button>
+            <button type="submit" class="btn btn-green">Add to Order</button>
         </form:form>
     </div>
 

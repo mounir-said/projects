@@ -143,6 +143,9 @@ public class MainController {
         return "Account.jsp";
     }
 
+       
+
+
     /**
      * Edits user account details.
      */
@@ -174,6 +177,52 @@ public class MainController {
         userService.favoriteOrderById(currentUserId, orderId);
         return "redirect:/account/" + currentUserId;
     }
+    
+ // Add this method in your controller
+    @GetMapping("/reorder/favorite")
+    public String reorderFavorite(HttpSession session, Model model) {
+        Long currentUserId = (Long) session.getAttribute("userId");
+        if (currentUserId == null) {
+            return "redirect:/";
+        }
+
+        List<Order> favoriteOrders = orderService.getFavoriteOrders(currentUserId);
+        model.addAttribute("favoriteOrders", favoriteOrders);
+
+        return "reorderFavorite.jsp"; // Make sure to create this JSP file
+    }
+    
+ // Add this method in your controller
+    @GetMapping("/order/reorder/{id}")
+    public String reorderPizza(@PathVariable("id") Long orderId, HttpSession session) {
+        Long currentUserId = (Long) session.getAttribute("userId");
+        if (currentUserId == null) {
+            return "redirect:/";
+        }
+
+        // Fetch the order and reprocess it (for example, by creating a new order entry)
+        Order order = orderService.getOneOrder(orderId);
+        if (order != null) {
+            // Process the reordering (e.g., creating a new order, updating status, etc.)
+            orderService.createOrder(order);
+        }
+
+        return "redirect:/account/" + currentUserId;
+    }
+    
+    @GetMapping("/order/surprise")
+    public String surpriseMe(HttpSession session, Model model) {
+        Long currentUserId = (Long) session.getAttribute("userId");
+        if (currentUserId == null) {
+            return "redirect:/";
+        }
+
+        Order randomOrder = orderService.createRandomOrder();
+        model.addAttribute("order", randomOrder);
+        return "surpriseMe.jsp";
+    }
+
+
 
     /**
      * Displays the order creation form.

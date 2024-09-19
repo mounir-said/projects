@@ -5,6 +5,8 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Account</title>
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
@@ -12,32 +14,35 @@
         .section-header {
             margin-bottom: 1rem;
         }
+        .btn-custom {
+            width: 100%; /* Make the button full width */
+        }
     </style>
 </head>
 <body>
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="#">MyApp</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav">
-                <li class="nav-item">
-                    <a class="nav-link" href="/home">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/order">Order</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/logout">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/account/${userId}">Account</a>
-                </li>
-            </ul>
-        </div>
-    </nav>
+   <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="#">Pizza Pete's</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="/home">Home</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/order">Order</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/account/${userId}">Account</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/logout">Logout</a>
+            </li>
+        </ul>
+    </div>
+</nav>
 
     <div class="container mt-4">
         <div class="row">
@@ -66,17 +71,19 @@
                         <form:input type="text" path="address" class="form-control"/>
                         <form:errors path="address" cssClass="text-danger"/>
                     </div>
-                    <div class="form-group">
-                        <form:label path="city">City:</form:label>
-                        <form:input type="text" path="city" class="form-control"/>
-                        <form:errors path="city" cssClass="text-danger"/>
+                    <div class="form-row"> <!-- Start a new row for City and State -->
+                        <div class="form-group col-md-6">
+                            <form:label path="city">City:</form:label>
+                            <form:input type="text" path="city" class="form-control"/>
+                            <form:errors path="city" cssClass="text-danger"/>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <form:label path="state">State:</form:label>
+                            <form:input type="text" path="state" class="form-control"/>
+                            <form:errors path="state" cssClass="text-danger"/>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <form:label path="state">State:</form:label>
-                        <form:input type="text" path="state" class="form-control"/>
-                        <form:errors path="state" cssClass="text-danger"/>
-                    </div>
-                    <button type="submit" class="btn btn-primary">Update</button>
+                    <button type="submit" class="btn btn-custom">Update</button>
                 </form:form>
             </div>
 
