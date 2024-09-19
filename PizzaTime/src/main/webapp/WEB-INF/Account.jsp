@@ -1,9 +1,8 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Account</title>
@@ -77,7 +76,7 @@
                         <form:input type="text" path="state" class="form-control"/>
                         <form:errors path="state" cssClass="text-danger"/>
                     </div>
-                    <button type="submit" class="btn btn-primary">UPDATE</button>
+                    <button type="submit" class="btn btn-primary">Update</button>
                 </form:form>
             </div>
 
@@ -88,12 +87,12 @@
                 <div class="list-group">
                     <c:forEach var="order" items="${favoriteOrders}">
                         <div class="list-group-item">
-                            <p><strong>Date:</strong> <c:out value="${order.createdAt}"/></p>
+                            <p><strong>Date:</strong> <fmt:formatDate value="${order.createdAt}" pattern="yyyy-MM-dd"/></p>
                             <p>
                                 <strong>Order:</strong> <c:out value="${order.crustType}"/> - 
-                                <c:forEach var="topping" items="${order.toppings}">
+                                <c:forEach var="topping" items="${order.toppings}" varStatus="status">
                                     <c:out value="${topping}"/>
-                                    <c:if test="${not empty topping}">, </c:if>
+                                    <c:if test="${!status.last}">, </c:if>
                                 </c:forEach>
                             </p>
                             <a href="/favorite/${order.id}" class="btn btn-sm btn-danger">Unfavorite</a>
@@ -105,12 +104,12 @@
                 <div class="list-group">
                     <c:forEach var="order" items="${pastOrders}">
                         <div class="list-group-item">
-                            <p><strong>Date:</strong> <c:out value="${order.createdAt}"/></p>
+                            <p><strong>Date:</strong> <fmt:formatDate value="${order.createdAt}" pattern="yyyy-MM-dd"/></p>
                             <p>
                                 <strong>Order:</strong> <c:out value="${order.crustType}"/> - 
-                                <c:forEach var="topping" items="${order.toppings}">
+                                <c:forEach var="topping" items="${order.toppings}" varStatus="status">
                                     <c:out value="${topping}"/>
-                                    <c:if test="${not empty topping}">, </c:if>
+                                    <c:if test="${!status.last}">, </c:if>
                                 </c:forEach>
                             </p>
                             <a href="/favorite/${order.id}" class="btn btn-sm btn-success">Make Favorite</a>

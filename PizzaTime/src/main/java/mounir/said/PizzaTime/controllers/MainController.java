@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
+import mounir.said.PizzaTime.dto.UserUpdateDto;
 import mounir.said.PizzaTime.models.Order;
 import mounir.said.PizzaTime.models.User;
 import mounir.said.PizzaTime.services.OrderService;
@@ -49,7 +50,7 @@ public class MainController {
         if (session.getAttribute("userId") != null) {
             return "redirect:/home";
         }
-        return "login.jsp";  // Returns login.jsp
+        return "login.jsp";
     }
 
     /**
@@ -60,7 +61,7 @@ public class MainController {
         if (session.getAttribute("userId") != null) {
             return "redirect:/home";
         }
-        return "registration.jsp";  // Returns registration.jsp
+        return "registration.jsp";
     }
 
     /**
@@ -71,15 +72,15 @@ public class MainController {
                                HttpSession session) {
         if (result.hasErrors()) {
             model.addAttribute("register_error", "Couldn't register user. Please try again.");
-            return "registration.jsp";  // Returns registration.jsp
+            return "registration.jsp";
         }
         if (userService.findByEmail(user.getEmail()) != null) {
             model.addAttribute("register_error", "That email is already in use. Please try again.");
-            return "registration.jsp";  // Returns registration.jsp
+            return "registration.jsp";
         }
         if (!user.getPassword().equals(user.getPasswordConfirmation())) {
             model.addAttribute("register_error", "Passwords don't match. Please try again.");
-            return "registration.jsp";  // Returns registration.jsp
+            return "registration.jsp";
         }
         User u = userService.registerUser(user);
         session.setAttribute("userId", u.getId());
@@ -97,7 +98,7 @@ public class MainController {
             return "redirect:/home";
         }
         model.addAttribute("login_error", "User authentication error. Please try again.");
-        return "login.jsp";  // Returns login.jsp
+        return "login.jsp";
     }
 
     /**
@@ -131,7 +132,6 @@ public class MainController {
         if (currentUserId == null) {
             return "redirect:/";
         }
-        model.addAttribute("userId", currentUserId);
         List<Order> pastOrders = userService.getAllOrdersByUser(id);
         List<Order> favoriteOrders = userService.findUserById(id).getFavoriteOrders();
         for (Order order : favoriteOrders) {
@@ -144,16 +144,21 @@ public class MainController {
     }
 
     /**
-     * Edits the user's account information.
+     * Edits user account details.
      */
     @PutMapping("/editaccount/{id}")
-    public String editAccount(HttpSession session, @PathVariable("id") Long userId,
-                              @Valid @ModelAttribute("user") User user, BindingResult result) {
+    public String editAccount(HttpSession session, 
+                              @PathVariable("id") Long userId,
+                              @Valid @ModelAttribute("userDto") UserUpdateDto userDto,
+                              BindingResult result) {
         Long currentUserId = (Long) session.getAttribute("userId");
         if (currentUserId == null) {
             return "redirect:/";
         }
-        userService.editUserById(currentUserId, user);
+        if (result.hasErrors()) {
+            return "Account.jsp";
+        }
+        userService.updateUser(currentUserId, userDto);
         return "redirect:/account/" + currentUserId;
     }
 
@@ -209,7 +214,7 @@ public class MainController {
             return "redirect:/";
         }
         Order currentOrder = (Order) session.getAttribute("currentOrder");
-        model.addAttribute("currentOrder", session.getAttribute("currentOrder"));
+        model.addAttribute("currentOrder", currentOrder);
         Double price = 9.99 + currentOrder.getToppings().size() * 0.50;
         model.addAttribute("price", price);
         return "Checkout.jsp";

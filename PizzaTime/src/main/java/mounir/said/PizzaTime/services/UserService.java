@@ -6,6 +6,7 @@ import java.util.Optional;
 import org.mindrot.jbcrypt.BCrypt;
 import org.springframework.stereotype.Service;
 
+import mounir.said.PizzaTime.dto.UserUpdateDto;
 import mounir.said.PizzaTime.models.*;
 import mounir.said.PizzaTime.repositories.*;
 
@@ -43,25 +44,41 @@ public class UserService {
         }
     }
 
-    public List<Order> getAllOrdersByUser(Long id) {
-        User user = userRepo.findById(id).get();
+    public List<Order> getAllOrdersByUser(Long userId) {
+        User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         return user.getOrders();
     }
 
     public void favoriteOrderById(Long userId, Long orderId) {
-    	User user = userRepo.findById(userId).get();
-		Order order = orderRepo.findById(orderId).get();
-    	if(user.getFavoriteOrders().contains(order)) {
-    		user.getFavoriteOrders().remove(order);
-    	} else {
-    		user.getFavoriteOrders().add(order);
-    	}
-    	userRepo.save(user);
+        User user = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+        Order order = orderRepo.findById(orderId).orElseThrow(() -> new RuntimeException("Order not found"));
+
+        if (order.getFavoritedBy() != null && order.getFavoritedBy().getId().equals(userId)) {
+            // Unfavorite the order
+            order.setFavoritedBy(null);
+        } else {
+            // Make favorite
+            order.setFavoritedBy(user);
+        }
+
+        orderRepo.save(order);
     }
 
-    public void editUserById(Long userId, User user) {
-    	User userToUpdate = userRepo.findById(userId).get();
-    	userToUpdate = user;
-    	userRepo.save(userToUpdate);
+    public List<Order> getFavoriteOrdersByUser(Long userId) {
+        return orderRepo.findAllByFavoritedById(userId);
     }
+
+    public void updateUser(Long userId, UserUpdateDto userDto) {
+        User userToUpdate = userRepo.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
+
+        userToUpdate.setFirstName(userDto.getFirstName());
+        userToUpdate.setLastName(userDto.getLastName());
+        userToUpdate.setEmail(userDto.getEmail());
+        userToUpdate.setAddress(userDto.getAddress());
+        userToUpdate.setCity(userDto.getCity());
+        userToUpdate.setState(userDto.getState());
+
+        userRepo.save(userToUpdate);
+    }
+
 }
